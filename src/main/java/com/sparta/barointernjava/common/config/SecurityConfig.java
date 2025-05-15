@@ -2,6 +2,8 @@ package com.sparta.barointernjava.common.config;
 
 import com.sparta.barointernjava.common.filter.JwtAuthenticationFilter;
 import com.sparta.barointernjava.common.jwt.JwtProvider;
+import com.sparta.barointernjava.common.security.CustomAccessDeniedHandler;
+import com.sparta.barointernjava.common.security.CustomAuthenticationEntryPoint;
 import com.sparta.barointernjava.common.security.UserDetailsServiceImpl;
 import com.sparta.barointernjava.user.domain.model.UserRole.Authority;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
     private final UserDetailsServiceImpl userDetailsService;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -44,8 +48,11 @@ public class SecurityConfig {
                 "/api/v1/users/login").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/v1/users").hasAuthority(Authority.ADMIN)
             .anyRequest().authenticated()
-
         );
+
+        http.exceptionHandling(ex -> ex
+            .authenticationEntryPoint(authenticationEntryPoint)
+            .accessDeniedHandler(accessDeniedHandler));
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement(
