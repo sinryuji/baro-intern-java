@@ -21,7 +21,7 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-@SQLRestriction("is_deleted is 0")
+@SQLRestriction("is_deleted = 0")
 public class User extends BaseEntity {
 
     @Id
@@ -31,7 +31,7 @@ public class User extends BaseEntity {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String nickname;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
