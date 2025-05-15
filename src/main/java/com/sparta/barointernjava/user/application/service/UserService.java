@@ -9,6 +9,8 @@ import com.sparta.barointernjava.user.application.dto.UserResponse;
 import com.sparta.barointernjava.user.domain.model.User;
 import com.sparta.barointernjava.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,5 +44,19 @@ public class UserService {
         }
 
         return jwtProvider.generateAccessToken(user.getUsername(), user.getRole().getAuthority());
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new BadRequestException("존재하지 않은 유저 입니다!"));
+
+        return UserResponse.fromEntity(user);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserResponse> getUserList(Pageable pageable) {
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(UserResponse::fromEntity);
     }
 }
