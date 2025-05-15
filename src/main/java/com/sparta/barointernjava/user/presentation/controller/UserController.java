@@ -3,6 +3,7 @@ package com.sparta.barointernjava.user.presentation.controller;
 import com.sparta.barointernjava.user.application.dto.UserResponse;
 import com.sparta.barointernjava.user.application.service.UserService;
 import com.sparta.barointernjava.user.presentation.dto.AdminSignupRequest;
+import com.sparta.barointernjava.user.presentation.dto.TokenResponse;
 import com.sparta.barointernjava.user.presentation.dto.UserSignupRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,5 +38,10 @@ public class UserController {
         UserResponse response = userService.signup(request.toApplicationDto());
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("login")
+    @Operation(summary = "로그인")
+    public ResponseEntity<TokenResponse> login() {
     }
 }

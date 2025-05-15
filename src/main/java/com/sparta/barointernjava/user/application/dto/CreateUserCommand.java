@@ -14,10 +14,10 @@ public class CreateUserCommand {
     private String nickname;
     private UserRole role;
 
-    public User toEntity() {
+    public User toEntity(String encryptedPassword) {
         return User.builder()
             .username(username)
-            .password(password)
+            .password(encryptedPassword)
             .nickname(nickname)
             .role(role)
             .build();

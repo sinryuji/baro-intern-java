@@ -16,7 +16,7 @@ public class UserResponse {
         return UserResponse.builder()
             .username(user.getUsername())
             .nickname(user.getNickname())
-            .role(user.getRole().name())
+            .role(user.getRole().getAuthority())
             .build();
     }
 }

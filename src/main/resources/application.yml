@@ -16,3 +16,8 @@ spring:
 
 admin:
   code: ${ADMIN_CODE}
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration:
+    access: ${JWT_ACCESS_EXPIRATION}
