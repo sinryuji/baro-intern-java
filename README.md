@@ -2,7 +2,7 @@
 1. docker-compose up -d로 docker-compose.yml의 mysql 컨테이너를 구동합니다.
 2. 컨터네이네 docker exec -it [container] /bin/bash로 접속한 후 mysql -u root -p로 cli로 접속한 후 create database [database name]; 으로 데이터베이스를 만듭니다.
 3. application.yml에 ${DB_URL}에는 만든 테이블을 포함한 URL, username과 password는 각각 root, root 입니다.
-4ㅣ 나머지 환경 변수를 채우고 실행하면 됩니다.
+4. 나머지 환경 변수를 채우고 실행하면 됩니다.
 
 # Swagger Endpoint
 http://43.201.248.44:8080/swagger-ui/index.html
