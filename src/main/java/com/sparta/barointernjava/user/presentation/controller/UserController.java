@@ -2,8 +2,8 @@ package com.sparta.barointernjava.user.presentation.controller;
 
 import com.sparta.barointernjava.user.application.dto.UserResponse;
 import com.sparta.barointernjava.user.application.service.UserService;
-import com.sparta.barointernjava.user.domain.model.UserRole;
-import com.sparta.barointernjava.user.presentation.dto.SignupRequest;
+import com.sparta.barointernjava.user.presentation.dto.AdminSignupRequest;
+import com.sparta.barointernjava.user.presentation.dto.UserSignupRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,10 +24,18 @@ public class UserController {
 
     @PostMapping("/signup")
     @Operation(summary = "일반 유저 회원가입")
-    public ResponseEntity<UserResponse> signup(@RequestBody @Valid SignupRequest request) {
-        UserResponse response = userService.signup(request.toApplicationDto(UserRole.USER));
+    public ResponseEntity<UserResponse> signupUser(@RequestBody @Valid UserSignupRequest request) {
+        UserResponse response = userService.signup(request.toApplicationDto());
 
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/signup/admin")
+    @Operation(summary = "관리자 회원가입")
+    public ResponseEntity<UserResponse> signupAdmin(
+        @RequestBody @Valid AdminSignupRequest request) {
+        UserResponse response = userService.signup(request.toApplicationDto());
+
+        return ResponseEntity.ok(response);
+    }
 }
