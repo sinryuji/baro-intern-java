@@ -1,7 +1,10 @@
 package com.sparta.barointernjava.user.application.service;
 
 import com.sparta.barointernjava.common.exception.BadRequestException;
+import com.sparta.barointernjava.common.exception.UnauthorizedException;
+import com.sparta.barointernjava.common.jwt.JwtProvider;
 import com.sparta.barointernjava.user.application.dto.CreateUserCommand;
+import com.sparta.barointernjava.user.application.dto.LoginCommand;
 import com.sparta.barointernjava.user.application.dto.UserResponse;
 import com.sparta.barointernjava.user.domain.model.User;
 import com.sparta.barointernjava.user.domain.repository.UserRepository;
@@ -16,6 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public UserResponse signup(CreateUserCommand command) {
@@ -26,5 +30,17 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         return UserResponse.fromEntity(savedUser);
+    }
+
+    @Transactional(readOnly = true)
+    public String login(LoginCommand command) {
+        User user = userRepository.findByUsername(command.getUsername())
+            .orElseThrow(() -> new BadRequestException("존재하지 않은 아이디 입니다!"));
+
+        if (!bCryptPasswordEncoder.matches(command.getPassword(), user.getPassword())) {
+            throw new UnauthorizedException("비밀번호가 틀렸습니다!");
+        }
+
+        return jwtProvider.generateAccessToken(user.getUsername(), user.getRole().getAuthority());
     }
 }

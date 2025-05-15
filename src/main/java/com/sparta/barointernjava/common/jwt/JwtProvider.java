@@ -50,14 +50,13 @@ public class JwtProvider {
         Date expireDate = new Date(date.getTime() + accessTokenExpiration);
 
         //암호화
-        return BEARER_PREFIX +
-            Jwts.builder()
-                .claim("sub", username)
-                .claim("role", role)
-                .setIssuedAt(date)
-                .setExpiration(expireDate)
-                .signWith(key, signatureAlgorithm)
-                .compact();
+        return Jwts.builder()
+            .claim("sub", username)
+            .claim("role", role)
+            .setIssuedAt(date)
+            .setExpiration(expireDate)
+            .signWith(key, signatureAlgorithm)
+            .compact();
     }
 
     // JWT 검증

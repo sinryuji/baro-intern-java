@@ -3,6 +3,7 @@ package com.sparta.barointernjava.user.presentation.controller;
 import com.sparta.barointernjava.user.application.dto.UserResponse;
 import com.sparta.barointernjava.user.application.service.UserService;
 import com.sparta.barointernjava.user.presentation.dto.AdminSignupRequest;
+import com.sparta.barointernjava.user.presentation.dto.LoginRequest;
 import com.sparta.barointernjava.user.presentation.dto.TokenResponse;
 import com.sparta.barointernjava.user.presentation.dto.UserSignupRequest;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,9 @@ public class UserController {
 
     @PostMapping("login")
     @Operation(summary = "로그인")
-    public ResponseEntity<TokenResponse> login() {
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid LoginRequest request) {
+        String token = userService.login(request.toApplicationDto());
+
+        return ResponseEntity.ok(new TokenResponse(token));
     }
 }
