@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "모든 유저 목록 가져오기(관리자 권한 필요)")
+    @Operation(summary = "모든 유저 목록 가져오기(")
     public ResponseEntity<Page<UserResponse>> getUserList(Pageable pageable) {
         Page<UserResponse> response = userService.getUserList(pageable);
 
