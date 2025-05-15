@@ -1,6 +1,6 @@
-package com.ohdelivery.service.barointernjava.user.domain.model;
+package com.sparta.barointernjava.user.domain.model;
 
-import com.ohdelivery.service.barointernjava.common.model.BaseEntity;
+import com.sparta.barointernjava.common.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,9 +9,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
+@SQLRestriction("is_deleted is 0")
 public class User extends BaseEntity {
 
     @Id

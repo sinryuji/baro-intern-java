@@ -1,4 +1,4 @@
-package com.ohdelivery.service.barointernjava.common.model;
+package com.sparta.barointernjava.common.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
