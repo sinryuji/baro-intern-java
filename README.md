@@ -1,3 +1,6 @@
+# 프로젝트 설명
+DDD 4계층 아키텍처를 적용하였고, Spring Security를 활용하여 인증 로직 구현하였습니다. Docker를 활용하여 개발 환경 구축 및 배포하였습니다. Mockito를 활용하여 테스트 코드를 작성하였습니다. 
+
 # 실행 방법
 1. docker-compose up -d로 docker-compose.yml의 mysql 컨테이너를 구동합니다.
 2. 컨터네이네 docker exec -it [container] /bin/bash로 접속한 후 mysql -u root -p로 cli로 접속한 후 create database [database name]; 으로 데이터베이스를 만듭니다.
